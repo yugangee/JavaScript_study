@@ -2,5 +2,6 @@
 
 # 계획
 책: 코어 자바스크립트
+
 참고: https://ko.javascript.info/
 
