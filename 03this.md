@@ -88,6 +88,25 @@ obj['method'](2); // { method: f } 2
 ```
 
 ### 함수로서 호출할 때 그 함수 내부에서의 this
+함수를 함수로서 호출할 경우에는 this가 지정되지 않는다.  
+-내부함수에서의 this  
+```js
+var obj1 = { //객체생성
+  outer: function() { //obj1.outer함수의 실행 컨텍스트가 생성괴면서 호이스팅, 스코프 체인 정보를 수집하고 this 바인딩. this에는 마지막 점 앞의 객체인 obj1이 바인딩됨.
+    console.log(this); // (1)obj1
+    var innerFunc = function() `  //호이스팅된 변수 innerFunc는 outer 스코프 내에서만 접근할 수 있는 지역변수
+      console.log(this); // (2)innerFunc호출 결과: 전역객체(Window) (3)obj2.innerMethod호출: obj2.innerMethod
+    };
+    innerFunc(); 
+
+    var obj2 = { //obj2역시 outer스코프 내에서만 접근할 수 있는 지역변수
+      innerMethod: innerFunc,
+    };
+    obj2.innerMethod();
+  },
+};
+obj1.outer(); //obj1.outer 호출
+```  
 
 ### 생성자 함수 내부에서의 this
 
