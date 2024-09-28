@@ -54,9 +54,38 @@ delete 연산자는 (window.)을 생략한 것
 전역변수로 선언한 경우에는 삭제가 되지 않는다  
 
 ### 메서드로서 호출할 때 그 메서드 내부에서의 this  
+
 어떤 함수를 객체의 프로퍼티에 할당한다고 해서 그 자체로서 무조건 메서드가 되는 것이 아니라  
 객체의 메서드로서 호출할 경우에만 메서드로 작동하고 그렇지 않으면 함수로 동작한다.  
--
+
+-함수로서 호출, 메서드로서 호출
+```js
+var func = function(x) { //func변수에 익명함수 할당
+  console.log(this, x);
+};
+func(1); // Window { ... } 1 //func호출: this로 전역객체 window 출력
+
+var obj = { //obj라는 변수에 객체를 할당. 그 객체의 method 프로퍼티 앞에서 만든 func 함수 할당
+  method: func,
+};
+obj.method(2); // { method: f } 2//obj의 methos호출: this가 obj
+```
+obj의 method프로퍼티에 할당한 값과 func변수에 할당한 값은 모두 1번째 줄에서 선언한 함수를 참조한다.
+
+### 함수로서의 호출과 메서드로서 호출  
+앞에 점이 없으면 함수로서 호출  
+앞에 점이 있으면 메서드로서 호출
+
+-메서드로서 호출
+```js
+var obj = {
+  method: function(x) {
+    console.log(this, x);
+  },
+};
+obj.method(1); // { method: f } 1
+obj['method'](2); // { method: f } 2
+```
 
 ### 함수로서 호출할 때 그 함수 내부에서의 this
 
